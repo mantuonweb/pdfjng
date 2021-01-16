@@ -1,23 +1,32 @@
-
 <nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
-      <a class="navbar-brand">PDF JS</a>
-      <div class="input-group">
-				<input style="width:200px;text-align:left;margin-top: 6px;" [(ngModel)]="searchText" type="text" class="form-control"/>
+			<a class="navbar-brand">PDF JS</a>
+			<div class="input-group">
+				<input style="width:200px;text-align:left;margin-top: 6px;" (keydown.enter)="searchNext()"
+					[(ngModel)]="searchText" type="text" class="form-control" />
+					
+					
+					<label for="searchType" style="margin-left:20px">Entire
+					</label>
+					<input id="searchType" style="margin-top: 15px;margin-left: 10px;" [(ngModel)]="currentSearchType" type="checkbox"/>
 			</div>
+
 		</div>
-		<div class="navbar-form navbar-right" >
+
+		<div class="navbar-form navbar-right">
 			<button class="previous round action" [disabled]="1==page" (click)="prev()">&#8249;</button>
 			<div class="input-group">
-				<input style="width:80px;text-align:center;" type="number" class="form-control" placeholder="Page" [(ngModel)]="page">
+				<input style="width:80px;text-align:center;" type="number" class="form-control" placeholder="Page"
+					[(ngModel)]="page">
 				<span class="pagelabel">
-          of {{totalPages}} Pages
-        </span>
+					of {{totalPages}} Pages
+				</span>
 			</div>
 			<button class="next round action" [disabled]="totalPages==page" (click)="next()">&#8250;</button>
 		</div>
 	</div>
 
 </nav>
-<app-pdfview [page]="page" (loaded)="loaded($event)" [searchText]="searchText" (pageChange)="onPageChange($event)"></app-pdfview>
+<app-pdfview [page]="page" (loaded)="loaded($event)" [searchText]="searchText" (pageChange)="onPageChange($event)" [searchInCurrent]="currentSearchType">
+</app-pdfview>

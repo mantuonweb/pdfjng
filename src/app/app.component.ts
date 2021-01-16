@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { PddviewComponent } from './pddview/pddview.component';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  @ViewChild(PddviewComponent, { static: false }) private pdfViewer: PddviewComponent;
   title = 'pdfvnew';
   page = 1;
   totalPages=null;
-  searchText=""
+  searchText="";
+  currentSearchType;
   loaded(doc){
     this.totalPages = doc._pdfInfo.numPages
   }
@@ -25,5 +28,10 @@ export class AppComponent {
   }
   onPageChange(page){
     this.page = page;
+  }
+  searchNext(){
+    if(this.searchText){
+      this.pdfViewer.findNext();
+    }
   }
 }
